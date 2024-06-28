@@ -17,9 +17,25 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+include_directories(include)
+
+set(PORT_HANDLER_SOURCES src/PortHandler.cpp)
+add_library(port_handler_library SHARED ${PORT_HANDLER_SOURCES})
+install(TARGETS port_handler_library DESTINATION lib)
+
+set(imu_publisher_dependencies 
+    "rclcpp" 
+    "sensor_msgs")
+add_executable(imu_publisher src/IMUPublisher.cpp)
+ament_target_dependencies(imu_publisher ${imu_publisher_dependencies})
+target_link_libraries(imu_publisher port_handler_library)
+install(TARGETS imu_publisher DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -31,5 +47,11 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME})
+
+ament_export_dependencies(rclcpp)
+ament_export_dependencies(sensor_msgs)
 
 ament_package()
