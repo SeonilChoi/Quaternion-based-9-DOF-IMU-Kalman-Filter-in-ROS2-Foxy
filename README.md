@@ -7,11 +7,19 @@ This work presents an orientation estimation using a quaternion-based Kalman fil
 
 # Description
 
+<<<<<<< HEAD
 The data from the IMU, which consists of accelerations, angular velocities, and magnetic fields, is published by the node named **IMUPublisher**.
+=======
+This package reads raw data from the IMU using source codes **imu_packet.hpp** and **imu_packet.cpp**.
+>>>>>>> e0422028318c430b52a29cdacb62f0990ce0c5e6
 
 This package reads raw data from the IMU using a library named **PortHandler**.
 
+<<<<<<< HEAD
 The node named **IMUKalman** subscribes to the topic where IMU data is published and estimates the orientation using a Kalman filter.
+=======
+The source codes **kalman_filter.hpp** and **kalman_filter.cpp** calculate the Kalman gain and update variables.
+>>>>>>> e0422028318c430b52a29cdacb62f0990ce0c5e6
 
 The library named **KalmanFilter** calculate the Kalman gain and update variables.
 
