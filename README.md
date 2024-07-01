@@ -11,7 +11,7 @@ The data from the IMU, which consists of accelerations, angular velocities, and 
 
 This package reads raw data from the IMU using a library named **PortHandler**.
 
-The node named **IMUKalman** subscribes to the topic where IMU data is published and estimates the orientation using a Kalman filter.
+The node named **IMUKalmanFilterPublisher** subscribes to the topic where IMU data is published and estimates the orientation using a Kalman filter.
 
 The library named **KalmanFilter** calculate the Kalman gain and update variables.
 
@@ -21,12 +21,11 @@ The library named **KalmanFilter** calculate the Kalman gain and update variable
 
 ```
 cd ~/colcon_ws
-colcon build
+colcon build --packages-select imu_kalman_filter
 ```
 
 ## Run
 
 ```
-ros2 run imu_kalman_filter imu_publisher
-ros2 run imu_kalman_filter imu_kalman
+ros2 launch imu_kalman_filter imu_kalman_filter.launch.py
 ```

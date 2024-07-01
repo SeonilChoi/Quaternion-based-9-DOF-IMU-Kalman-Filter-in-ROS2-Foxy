@@ -1,5 +1,7 @@
 #include "imu_kalman_filter/PortHandler.hpp"
 
+#include <iostream>
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -143,6 +145,10 @@ int PortHandler::writePacket(uint8_t * packet)
         return COMM_WRITE_FAIL;
     }
     
+    for (ssize_t s = 0; s < total_packet_length; s++){
+        std::cout << static_cast<int>(packet[s]) << std::endl;
+    }
+
     return COMM_SUCCESS;
 }
 

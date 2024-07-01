@@ -14,8 +14,8 @@
 #define PKT_LENGTH       4
 #define PKT_PARAMETER    5
 
-#define FROM_PC      0xC9
-#define FROM_ARDUINO 0xC8
+#define FROM_PC      0x40
+#define FROM_ARDUINO 0x41
 
 class PortHandler
 {

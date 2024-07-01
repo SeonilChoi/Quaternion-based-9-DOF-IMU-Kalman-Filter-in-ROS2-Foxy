@@ -16,6 +16,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
+find_package(Boost REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -23,7 +24,11 @@ find_package(sensor_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME})
+
 include_directories(include)
+
+# IMU Publisher
 
 set(PORT_HANDLER_SOURCES src/PortHandler.cpp)
 add_library(port_handler_library SHARED ${PORT_HANDLER_SOURCES})
@@ -37,6 +42,20 @@ ament_target_dependencies(imu_publisher ${imu_publisher_dependencies})
 target_link_libraries(imu_publisher port_handler_library)
 install(TARGETS imu_publisher DESTINATION lib/${PROJECT_NAME})
 
+# IMU Kalman Filter Publisher
+
+set(KALMAN_FILTER_SOURCES src/KalmanFilter.cpp)
+add_library(kalman_filter_library SHARED ${KALMAN_FILTER_SOURCES})
+install(TARGETS kalman_filter_library DESTINATION lib)
+
+set(imu_kalman_filter_publisher_dependencies
+    "rclcpp"
+    "sensor_msgs")
+add_executable(imu_kalman_filter_publisher src/IMUKalmanFilterPublisher.cpp)
+ament_target_dependencies(imu_kalman_filter_publisher ${imu_kalman_filter_publisher_dependencies})
+target_link_libraries(imu_kalman_filter_publisher kalman_filter_library)
+install(TARGETS imu_kalman_filter_publisher DESTINATION lib/${PROJECT_NAME})
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -47,11 +66,5 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-ament_export_include_directories(include)
-ament_export_libraries(${PROJECT_NAME})
-
-ament_export_dependencies(rclcpp)
-ament_export_dependencies(sensor_msgs)
 
 ament_package()
