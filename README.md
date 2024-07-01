@@ -1,7 +1,8 @@
 # Quaternion-based 9-DOF IMU Kalman Filter in ROS2 Foxy
 
 This work presents an orientation estimation using a quaternion-based Kalman filter with a 9-DOF IMU in ROS2 foxy.
-:warning: The yaw is only valid when the IMU sensor is horizontal.
+
+ :warning: The yaw is only valid when the IMU sensor is horizontal.
 
 > [!NOTE]
 > This work does not include Arduino code that sends raw IMU data to a PC using Serial communication. The Arduino code is [here](https://github.com/SeonilChoi/MPU-9250-Serial-Communication.git).
