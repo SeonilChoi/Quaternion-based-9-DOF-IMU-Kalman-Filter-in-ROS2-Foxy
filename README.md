@@ -20,7 +20,6 @@ The library named **KalmanFilter** calculate the Kalman gain and update variable
 ## Build the package
 
 ```
-cd ~/colcon_ws
 colcon build --packages-select imu_kalman_filter
 ```
 
