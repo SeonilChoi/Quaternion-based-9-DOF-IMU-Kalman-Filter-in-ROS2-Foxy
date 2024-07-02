@@ -9,7 +9,7 @@ This work presents an orientation estimation using a quaternion-based Kalman fil
  :warning: The yaw(heading) is only valid when the IMU sensor is horizontal or near horizontal.
 
 > [!NOTE]
-> This work does not include Arduino code that sends raw IMU data to a PC using Serial communication. The Arduino code is [here](https://github.com/SeonilChoi/MPU-9250-Serial-Communication.git).
+> This work does not include sending raw IMU data to a PC or receiving it using serial communication. If you need this, you can check the following [link](https://github.com/SeonilChoi/MPU-9250-Serial-Communication.git).
 
 # Description
 
