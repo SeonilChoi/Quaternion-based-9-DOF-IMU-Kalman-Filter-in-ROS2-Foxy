@@ -5,7 +5,11 @@ def generate_launch_description():
     imu_publisher = Node(
         package = "imu_kalman_filter",
         executable = "imu_publisher",
-        name = "imu_publisher"
+        name = "imu_publisher",
+        parameters = [{
+            "MPU6050":True,
+            "AK8963":True
+        }]
     )
     
     imu_kalman_filter_publisher = Node(

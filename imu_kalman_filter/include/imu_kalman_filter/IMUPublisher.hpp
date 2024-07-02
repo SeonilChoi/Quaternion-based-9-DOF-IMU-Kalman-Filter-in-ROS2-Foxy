@@ -22,7 +22,15 @@ private:
 
     void timer_callback();
 
-    void makeImuMsg(uint8_t * raw, Imu * imu_msg, MagneticField *  mag_msg);
+    void convertRaw2Imu(uint8_t * raw, int16_t * data);
+    void convertData2ImuMsg(int16_t * data);
+    void convertData2MagMsg(int16_t * data);
+
+    bool MPU6050_;
+    bool AK8963_;
+
+    uint8_t * write_data_;
+    uint8_t write_length_;
 };
 
 #endif
