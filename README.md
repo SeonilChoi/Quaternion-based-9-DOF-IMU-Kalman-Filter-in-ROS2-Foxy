@@ -6,7 +6,7 @@ This work presents an orientation estimation using a quaternion-based Kalman fil
  <img src = "https://github.com/SeonilChoi/Quaternion-based-9-DOF-IMU-Kalman-Filter-in-ROS2-Foxy/assets/172185042/616a6027-c3df-443f-a143-0f3f420fabad" />
 </p>
 
- :warning: The yaw is only valid when the IMU sensor is horizontal.
+ :warning: The yaw is only valid when the IMU sensor is horizontal or near horizontal.
 
 > [!NOTE]
 > This work does not include Arduino code that sends raw IMU data to a PC using Serial communication. The Arduino code is [here](https://github.com/SeonilChoi/MPU-9250-Serial-Communication.git).
