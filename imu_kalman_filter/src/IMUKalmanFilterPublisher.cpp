@@ -1,5 +1,7 @@
 #include "imu_kalman_filter/IMUKalmanFilterPublisher.hpp"
 
+#include <cmath>
+
 using namespace std::chrono_literals;
 
 KalmanFilter * kf;
@@ -41,6 +43,10 @@ IMUKalmanFilterPublisher::IMUKalmanFilterPublisher() : Node("imu_kalman_filter_p
     mag_.x = 0.0;
     mag_.y = 0.0;
     mag_.z = 0.0;
+
+    euler_.roll = 0.0;
+    euler_.pitch = 0.0;
+    euler_.yaw = 0.0;
 
     IMU_READ_ = false;
     MAG_READ_ = false;
@@ -96,17 +102,21 @@ void IMUKalmanFilterPublisher::timer_callback()
     if (!IMU_READ_ || !MAG_READ_)
         return;
 
-    EulerAngle euler;
     Quaternion quater;
     Quaternion filtered_quater;
 
-    Acceleration2EulerAngle(acc_, &euler);
-    Magnetic2EulerAngle(mag_, &euler);
-    EulerAngle2Quaternion(euler, &quater);
+    Acceleration2EulerAngle(acc_, &euler_);
+    if (std::fabs(euler_.roll) < 0.2 && std::fabs(euler_.pitch) < 0.2)
+        Magnetic2EulerAngle(mag_, &euler_);
+
+    EulerAngle2Quaternion(euler_, &quater);
 
     kf->step(gyro_, quater, &filtered_quater);
 
     Imu msg;
+
+    msg.header.stamp = this->get_clock()->now();
+    msg.header.frame_id = "base_link";
 
     msg.linear_acceleration.x = acc_.x;
     msg.linear_acceleration.y = acc_.y;
@@ -120,7 +130,7 @@ void IMUKalmanFilterPublisher::timer_callback()
     msg.orientation.x = filtered_quater.x;
     msg.orientation.y = filtered_quater.y;
     msg.orientation.z = filtered_quater.z;
-    
+        
     imu_pub_->publish(msg);
 
     IMU_READ_ = false;
@@ -140,8 +150,8 @@ void IMUKalmanFilterPublisher::Magnetic2EulerAngle(Magnetic mag, EulerAngle * eu
     double cp = std::cos(euler->pitch);
     double sp = std::sin(euler->pitch);
 
-    euler->yaw = std::atan2(-(mag.x * sr * sp + mag.y * cr - mag.z * sr * cp),
-                             (mag.x * cp + mag.z * sp));
+    euler->yaw = std::atan2((mag.x * sr * sp + mag.y * cr - mag.z * sr * cp),
+                            (mag.x * cp + mag.z * sp));
 }
 
 void IMUKalmanFilterPublisher::EulerAngle2Quaternion(EulerAngle euler, Quaternion * q)

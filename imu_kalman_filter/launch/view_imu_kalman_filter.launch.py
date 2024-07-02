@@ -13,6 +13,10 @@ def generate_launch_description():
         get_package_share_directory('imu_serial_communication')
     )
     
+    rviz_path = os.path.join(
+        get_package_share_directory('imu_kalman_filter'), 'rviz', 'imu_kalman_filter.rviz'
+    )
+
     imu_serial_communication_launcher = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -31,8 +35,17 @@ def generate_launch_description():
         }]
     )
     
+    rviz2 = Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
+            arguments=['-d', rviz_path],
+            output='screen'
+    )
+    
     return LaunchDescription([
         imu_serial_communication_launcher,
-        imu_kalman_filter_publisher
+        imu_kalman_filter_publisher,
+        rviz2
     ])
     

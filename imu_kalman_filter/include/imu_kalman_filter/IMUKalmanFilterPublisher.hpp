@@ -26,6 +26,7 @@ public:
     Gyroscope gyro_;
     Acceleration acc_;
     Magnetic mag_;
+    EulerAngle euler_;
 
 private:
     rclcpp::Subscription<Imu>::SharedPtr imu_sub_;
