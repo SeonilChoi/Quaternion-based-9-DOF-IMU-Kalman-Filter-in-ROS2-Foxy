@@ -28,12 +28,10 @@ colcon build --packages-select imu_kalman_filter
 
 ```
 ros2 launch imu_kalman_filter imu_kalman_filter.launch.py
-
 ```
 
 or
 
 ```
 ros2 launch imu_kalman_filter view_imu_kalman_filter.launch.py
-
 ```
