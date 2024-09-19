@@ -3,7 +3,7 @@
 This work presents an orientation estimation using a quaternion-based Kalman filter with a 9-DOF IMU in ROS2 foxy.
 
 <p align = "left">
- <img src = "https://github.com/user-attachments/assets/ebbcb1a0-91e4-48dd-8696-a39473e6aa90" width=750/>
+ <img src = "https://github.com/user-attachments/assets/8a27cac1-5f29-4b08-b172-7c73ea0b62c0" width=750/>
 </p>
 
  :warning: The yaw(heading) is only valid when the IMU sensor is horizontal or near horizontal.
